@@ -10,7 +10,8 @@ import * as jwt from 'jsonwebtoken';
 export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const { token } = request.cookies;
+    // const { token } = request.cookies;
+    const { authorization: token } = request.headers;
     if (!token) {
       throw new UnauthorizedException('Please provide token');
     }
@@ -26,7 +27,7 @@ export class AuthGuard implements CanActivate {
 
   validateToken(token: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      jwt.verify(token, 'soemtingtoreplace', async (err: any, payload: any) => {
+      jwt.verify(token, process.env.JWT_SECRET as string, async (err: any, payload: any) => {
         if (err) {
           reject(
             new UnauthorizedException('Session expired. Please login again.'),

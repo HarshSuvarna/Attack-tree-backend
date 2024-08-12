@@ -54,14 +54,14 @@ export class AuthenticationController {
         {
           ...userData,
         },
-        'soemtingtoreplace',
+        process.env.JWT_SECRET as string,
         { expiresIn: '7d' },
       );
-      res.cookie('token', token, this.cookieConfigs);
+      // res.cookie('token', token, this.cookieConfigs);
       return {
         message: 'Login Successful',
         userData: userData,
-        // token,
+        token,
       };
     } catch (error) {
       throw new BadRequestException(error?.message || error);
@@ -97,14 +97,14 @@ export class AuthenticationController {
         {
           ...userData,
         },
-        'soemtingtoreplace',
+        process.env.JWT_SECRET,
         { expiresIn: '7d' },
       );
-      res.cookie('token', token, this.cookieConfigs);
+      // res.cookie('token', token, this.cookieConfigs);
       return {
         message: 'Registration Successful',
         userData: userData,
-        // token,
+        token,
       };
     } catch (error) {
       throw new BadRequestException(error?.message || error);
