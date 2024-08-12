@@ -2,20 +2,18 @@ import {
   BadRequestException,
   Body,
   Controller,
-  HttpException,
   Post,
   Res,
   UnauthorizedException,
-  UseGuards,
 } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
-import { AuthenticationService } from './authentication.service';
-import { CookieOptions, Response } from 'express';
 import { ApiTags } from '@nestjs/swagger';
-import { LoginDto, RegisterDto } from './authentication.dto';
-import { UserService } from 'src/user/user.service';
+import * as bcrypt from 'bcrypt';
+import { CookieOptions, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
-import { CreateUserDto, UpdateUserDto } from 'src/user/user.dto';
+import { CreateUserDto } from '../user/user.dto';
+import { UserService } from '../user/user.service';
+import { LoginDto } from './authentication.dto';
+import { AuthenticationService } from './authentication.service';
 
 @ApiTags('Authentication')
 @Controller('authentication')

@@ -14,15 +14,15 @@ import { TreeService } from './tree.service';
 import { CreateTreeDto, UpdateTreeDto } from './tree.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import { AuthGuard } from 'src/authentication/auth.guard';
-import { NodeService } from 'src/node/node.service';
-import { createPath, findPaths } from 'src/helpers/leastCost';
-import { Node_Type_Enum } from 'src/common/enums';
-import { findLeastSkillPaths } from 'src/helpers/leastSkill';
-import { findHighestFrequencyPaths } from 'src/helpers/highestFrequency';
-import { findPossiblePaths } from 'src/helpers/allPossiblePaths';
+import { AuthGuard } from '../authentication/auth.guard';
+import { NodeService } from '../node/node.service';
+import { createPath, findPaths } from '../helpers/leastCost';
+import { Node_Type_Enum } from '../common/enums';
+import { findLeastSkillPaths } from '../helpers/leastSkill';
+import { findHighestFrequencyPaths } from '../helpers/highestFrequency';
+import { findPossiblePaths } from '../helpers/allPossiblePaths';
 import { v4 as uuidv4 } from 'uuid';
-import { findHighestProbabilityPaths } from 'src/helpers/highestProbability';
+import { findHighestProbabilityPaths } from '../helpers/highestProbability';
 
 @ApiTags('Tree')
 @UseGuards(AuthGuard)

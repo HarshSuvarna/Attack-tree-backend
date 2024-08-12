@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { LogsDto } from 'src/tree/tree.dto';
+import { LogsDto } from '../tree/tree.dto';
 
 export type TreeDocument = HydratedDocument<Tree>;
 

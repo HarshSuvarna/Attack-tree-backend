@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthenticationService } from 'src/authentication/authentication.service';
-import { FirebaseService } from 'src/firebase/firebase.service';
-import { NodeService } from 'src/node/node.service';
-import { EdgeSchema } from 'src/schemas/edgeSchema';
-import { NodeSchema } from 'src/schemas/node.schema';
-import { TreeSchema } from 'src/schemas/tree.schema';
-import { UserSchema } from 'src/schemas/user.schema';
-import { TreeService } from 'src/tree/tree.service';
-import { UserService } from 'src/user/user.service';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { FirebaseService } from '../firebase/firebase.service';
+import { NodeService } from '../node/node.service';
+import { EdgeSchema } from '../schemas/edgeSchema';
+import { NodeSchema } from '../schemas/node.schema';
+import { TreeSchema } from '../schemas/tree.schema';
+import { UserSchema } from '../schemas/user.schema';
+import { TreeService } from '../tree/tree.service';
+import { UserService } from '../user/user.service';
 
 @Module({
   imports: [

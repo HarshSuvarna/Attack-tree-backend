@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
-import { FirebaseService } from './firebase.service';
+import { CommonModule } from '../common/common.module';
 import { FirebaseController } from './firebase.controller';
-import { CommonModule } from 'src/common/common.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import * as admin from 'firebase-admin';
+import { FirebaseService } from './firebase.service';
 
 @Module({
   imports: [CommonModule],

@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { UUID } from 'crypto';
 import { HydratedDocument, Types } from 'mongoose';
-import { DataDto, PositionDto } from 'src/node/node.dto';
+import { DataDto, PositionDto } from '../node/node.dto';
 
 export type NodeDocument = HydratedDocument<Node>;
 

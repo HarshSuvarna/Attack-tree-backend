@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TreeService } from './tree.service';
 import { TreeController } from './tree.controller';
-import { CommonModule } from 'src/common/common.module';
+import { CommonModule } from '../common/common.module';
 
 @Module({
   imports: [CommonModule],

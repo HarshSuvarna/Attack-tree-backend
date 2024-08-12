@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { FirebaseService } from './firebase.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/authentication/auth.guard';
+import { AuthGuard } from '../authentication/auth.guard';
 
 @ApiTags('storage')
 @UseGuards(AuthGuard)

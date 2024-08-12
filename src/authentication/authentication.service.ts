@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from 'src/schemas/user.schema';
+import { User } from '../schemas/user.schema';
 import { LoginDto } from './authentication.dto';
 
 @Injectable()
@@ -22,8 +22,8 @@ export class AuthenticationService {
   }
 
   async login(user: LoginDto) {
-    console.log("maybe here");
-    
+    console.log('maybe here');
+
     const payload = {
       email: user.email,
     };

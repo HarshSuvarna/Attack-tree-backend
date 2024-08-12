@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateTreeDto, UpdateTreeDto } from './tree.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Tree } from 'src/schemas/tree.schema';
+import { Tree } from '../schemas/tree.schema';
 
 @Injectable()
 export class TreeService {

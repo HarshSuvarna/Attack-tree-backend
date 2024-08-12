@@ -1,16 +1,16 @@
 import {
+  Body,
   Controller,
   Get,
-  Post,
-  Body,
-  Patch,
   Param,
+  Patch,
+  Post,
   UseGuards,
 } from '@nestjs/common';
-import { NodeService } from './node.service';
-import { NodeDto } from './node.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/authentication/auth.guard';
+import { AuthGuard } from '../authentication/auth.guard';
+import { NodeDto } from './node.dto';
+import { NodeService } from './node.service';
 
 @ApiTags('Node')
 @UseGuards(AuthGuard)

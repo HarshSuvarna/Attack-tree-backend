@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { UUID } from 'crypto';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
-import { DataDto } from 'src/node/node.dto';
+import { DataDto } from '../node/node.dto';
 
 export type EdgeDocument = HydratedDocument<Edge>;
 

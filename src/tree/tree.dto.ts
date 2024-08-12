@@ -11,7 +11,7 @@ import {
 } from 'class-validator';
 import { UUID } from 'crypto';
 import { Types } from 'mongoose';
-import { NodeDto } from 'src/node/node.dto';
+import { NodeDto } from '../node/node.dto';
 
 export class LogsDto {
   @ApiProperty({ required: true })
