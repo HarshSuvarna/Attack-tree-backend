@@ -37,10 +37,9 @@ export class FirebaseService {
     const options: any = {
       version: 'v4',
       action: 'write', // Use 'read' for download URLs
-      // expires: Date.now() + expiresIn * 1000, // 1 hour
+      expires: Date.now() + expiresIn * 1000, // 1 hour
     };
     const [url]: any = await bucket.file(fileName).getSignedUrl(options);
-
     return url;
   }
 }
