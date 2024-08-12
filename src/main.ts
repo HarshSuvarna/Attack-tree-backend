@@ -29,6 +29,7 @@ async function bootstrap() {
       'http://localhost:3000',
       'http://localhost:8080',
       'http://localhost:5173',
+      'https://attack-tree-tool-frontend.onrender.com',
     ],
   });
   await app.listen(8080);
