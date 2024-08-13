@@ -24,12 +24,13 @@ async function bootstrap() {
   app.enableCors({
     credentials: true,
     methods: ['OPTIONS', 'GET', 'PUT', 'POST', 'PATCH', 'DELETE'],
-    exposedHeaders: ['set-cookie'],
+    exposedHeaders: ['Set-cookie'],
     origin: [
       'http://localhost:3000',
       'http://localhost:8080',
       'http://localhost:5173',
       'https://attack-tree-tool-frontend.onrender.com',
+      'https://attacktree.netlify.app/login',
     ],
   });
   await app.listen(8080);
