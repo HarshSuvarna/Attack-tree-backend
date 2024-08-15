@@ -14,15 +14,16 @@ import { TreeService } from './tree.service';
 import { CreateTreeDto, UpdateTreeDto } from './tree.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import { AuthGuard } from '../authentication/auth.guard';
-import { NodeService } from '../node/node.service';
-import { createPath, findPaths } from '../helpers/leastCost';
-import { Node_Type_Enum } from '../common/enums';
-import { findLeastSkillPaths } from '../helpers/leastSkill';
-import { findHighestFrequencyPaths } from '../helpers/highestFrequency';
-import { findPossiblePaths } from '../helpers/allPossiblePaths';
+import { AuthGuard } from 'src/authentication/auth.guard';
+import { NodeService } from 'src/node/node.service';
+import { createPath, findPaths } from 'src/helpers/leastCost';
+import { Node_Type_Enum } from 'src/common/enums';
+import { findLeastSkillPaths } from 'src/helpers/leastSkill';
+import { findHighestFrequencyPaths } from 'src/helpers/highestFrequency';
+import { findPossiblePaths } from 'src/helpers/allPossiblePaths';
 import { v4 as uuidv4 } from 'uuid';
-import { findHighestProbabilityPaths } from '../helpers/highestProbability';
+import { findHighestProbabilityPaths } from 'src/helpers/highestProbability';
+import { UserService } from 'src/user/user.service';
 
 @ApiTags('Tree')
 @UseGuards(AuthGuard)
@@ -32,6 +33,7 @@ export class TreeController {
   constructor(
     private readonly treeService: TreeService,
     private readonly nodeService: NodeService,
+    private readonly userService: UserService,
   ) {}
 
   @Post('create')
@@ -136,7 +138,7 @@ export class TreeController {
             topNodeId,
           );
           break;
-        case '':
+        case 'possible':
           if (param?.isPossible || false) {
             calculations = findPossiblePaths({ nodes, edges }, topNodeId);
           }
@@ -199,11 +201,15 @@ export class TreeController {
         this.treeService.findOne(treeId),
         this.nodeService.getAllTreeNodes(treeId),
       ]);
+
       let [treeData, nodes]: [any, any] = promises;
+      const userDetails = await this.userService.findAllUserDetails(
+        treeData.users,
+      );
       treeData.nodes = (treeData.nodeIds || []).map((nId: string) =>
         nodes.find((n) => n.id === nId),
       );
-      return { ...treeData };
+      return { ...treeData, userDetails };
     } catch (error) {
       console.log(`API Error: get-all/get -`, error?.message || error);
       throw new InternalServerErrorException(error?.message || error);

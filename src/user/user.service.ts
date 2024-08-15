@@ -19,6 +19,11 @@ export class UserService {
   findAll() {
     return this.userModel.find({});
   }
+  findAllUserDetails(userIds) {
+    return this.userModel
+      .find({ _id: { $in: userIds } }, { firstName: 1, lastName: 1, email: 1 })
+      .lean();
+  }
 
   searchUser(search: string) {
     const regex = new RegExp(search, 'i');
@@ -30,7 +35,7 @@ export class UserService {
           { email: { $regex: regex } },
         ],
       })
-      .select('firstName lastName email') 
+      .select('firstName lastName email')
       .exec();
   }
 

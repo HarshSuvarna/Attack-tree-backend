@@ -16,6 +16,8 @@ export class TreeService {
     return createdTree.save();
   }
 
+  
+
   findAll(userId: string) {
     return this.treeModel.find({
       users: { $in: userId },
