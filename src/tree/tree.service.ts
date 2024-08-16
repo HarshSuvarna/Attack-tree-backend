@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateTreeDto, UpdateTreeDto } from './tree.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Tree } from '../schemas/tree.schema';
+import { Tree } from 'src/schemas/tree.schema';
 
 @Injectable()
 export class TreeService {
@@ -16,17 +16,56 @@ export class TreeService {
     return createdTree.save();
   }
 
-  
+  // findAll(userId: string) {
+  //   return this.treeModel.find({
+  //     users: { $in: userId },
+  //   });
+  // }
 
   findAll(userId: string) {
-    return this.treeModel.find({
-      users: { $in: userId },
-    });
+    return this.treeModel.aggregate([
+      {
+        $match: {
+          users: userId, // Match trees where the userId is in the users array
+        },
+      },
+      {
+        $addFields: {
+          convertedId: { $toObjectId: '$ownerId' },
+        },
+      },
+      {
+        $lookup: {
+          from: 'users', // The users collection
+          localField: 'convertedId', // The ownerId field in the trees collection
+          foreignField: '_id', // The _id field in the users collection
+          as: 'ownerData', // The name of the field to store the result
+        },
+      },
+    ]);
   }
+
   findTempaltes() {
-    return this.treeModel.find({
-      type: 'template',
-    });
+    return this.treeModel.aggregate([
+      {
+        $match: {
+          type: 'template', // Match trees where the userId is in the users array
+        },
+      },
+      {
+        $addFields: {
+          convertedId: { $toObjectId: '$ownerId' },
+        },
+      },
+      {
+        $lookup: {
+          from: 'users', // The users collection
+          localField: 'convertedId', // The ownerId field in the trees collection
+          foreignField: '_id', // The _id field in the users collection
+          as: 'ownerData', // The name of the field to store the result
+        },
+      },
+    ]);
   }
   getName(_id: string) {
     return this.treeModel.findOne({ _id }, { name: 1 });
