@@ -8,6 +8,7 @@ import {
   Delete,
   InternalServerErrorException,
   UseGuards,
+  Put,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
@@ -62,9 +63,9 @@ export class UserController {
     }
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+    return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')

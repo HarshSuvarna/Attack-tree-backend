@@ -54,4 +54,9 @@ export class NodeService {
   remove(id: string) {
     return this.nodeModel.deleteOne({ id });
   }
+
+  deleteAll(treeId: string) {
+    console.log(' treeId :>> ', treeId);
+    return this.nodeModel.deleteMany({ treeId: treeId });
+  }
 }

@@ -122,6 +122,9 @@ export class TreeController {
         (n) => (n.type = Node_Type_Enum.TOP_GATE),
       )?.id;
       let calculations: any = {};
+      if (param.field === '' && param.isPossible) {
+        param.field = 'possible';
+      }
       switch (param?.field) {
         case 'cost':
           calculations = findPaths({ nodes, edges }, topNodeId);
@@ -142,6 +145,7 @@ export class TreeController {
           if (param?.isPossible || false) {
             calculations = findPossiblePaths({ nodes, edges }, topNodeId);
           }
+          break;
       }
       const animatedEdges = createPath(
         calculations?.leastCostPath ||
@@ -222,6 +226,17 @@ export class TreeController {
       return this.treeService.getName(id);
     } catch (error) {
       console.log(`API Error: get-tree-name/get -`, error?.message || error);
+      throw new InternalServerErrorException(error?.message || error);
+    }
+  }
+
+  @Delete(':id')
+  async deleteTree(@Param('id') id: string) {
+    try {
+      await this.nodeService.deleteAll(id);
+      return this.treeService.delete(id);
+    } catch (error) {
+      console.log(`API Error: tree/delete -`, error?.message || error);
       throw new InternalServerErrorException(error?.message || error);
     }
   }

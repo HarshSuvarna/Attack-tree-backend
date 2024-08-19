@@ -46,8 +46,8 @@ export class UserService {
   findUser(email: string) {
     return this.userModel.findOne({ email: email });
   }
-  update(id: number, dd: UpdateUserDto) {
-    return dd;
+  update(_id: string, param: UpdateUserDto) {
+    return this.userModel.findOneAndUpdate({ _id }, { ...param });
   }
 
   remove(id: number) {

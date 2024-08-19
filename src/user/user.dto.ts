@@ -24,10 +24,6 @@ export class CreateUserDto {
 }
 
 export class UpdateUserDto {
-  @ApiProperty({})
-  @IsString()
-  _id: string;
-
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsString()
@@ -42,9 +38,4 @@ export class UpdateUserDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
-
-  @ApiProperty({ required: true })
-  @IsNotEmpty()
-  @IsString()
-  password: string;
 }

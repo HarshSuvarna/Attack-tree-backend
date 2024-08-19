@@ -21,7 +21,9 @@ export class TreeService {
   //     users: { $in: userId },
   //   });
   // }
-
+  delete(_id: string) {
+    return this.treeModel.deleteOne({ _id });
+  }
   findAll(userId: string) {
     return this.treeModel.aggregate([
       {
