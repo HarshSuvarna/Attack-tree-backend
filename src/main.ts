@@ -31,6 +31,7 @@ async function bootstrap() {
       'http://localhost:5173',
       'https://cybersafe-0h3v.onrender.com',
       'https://cybersafe-289mqpmtf-harshteam-294428ec.vercel.app',
+      'https://cybersafe-rose.vercel.app',
     ],
   });
   await app.listen(8080);
