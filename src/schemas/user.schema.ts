@@ -15,6 +15,9 @@ export class User {
   email: string;
 
   @Prop({ required: true })
+  verified: boolean;
+
+  @Prop({ required: true })
   password: string;
 }
 
@@ -26,4 +29,5 @@ export interface userInterface {
   lastName: string;
   email: string;
   password: string;
+  verified: boolean;
 }

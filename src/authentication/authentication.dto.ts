@@ -13,7 +13,19 @@ export class LoginDto {
   password: string;
 }
 
-export class RegisterDto{
+export class VerifyDto {
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @IsString()
+  token: string;
+}
+
+export class RegisterDto {
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsString()

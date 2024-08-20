@@ -25,6 +25,10 @@ export class UserService {
       .lean();
   }
 
+  setUesrvalid(_id: string) {
+    return this.userModel.updateOne({ _id }, { $set: { verified: true } });
+  }
+
   searchUser(search: string) {
     const regex = new RegExp(search, 'i');
     return this.userModel

@@ -12,9 +12,10 @@ import { CookieOptions, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { CreateUserDto } from '../user/user.dto';
 import { UserService } from '../user/user.service';
-import { LoginDto } from './authentication.dto';
+import { LoginDto, VerifyDto } from './authentication.dto';
 import { AuthenticationService } from './authentication.service';
-
+import { sendEmail } from 'src/helpers/email';
+import { validateToken } from 'src/helpers/validateEmailToken';
 @ApiTags('Authentication')
 @Controller('authentication')
 export class AuthenticationController {
@@ -39,6 +40,9 @@ export class AuthenticationController {
       const user = await this.userService.findUser(email);
       if (!user) {
         throw new UnauthorizedException();
+      }
+      if (!user.verified) {
+        throw new BadRequestException('User not verified');
       }
       const isMatched = await bcrypt.compare(password, user.password);
       if (!isMatched) {
@@ -68,6 +72,21 @@ export class AuthenticationController {
     }
   }
 
+  @Post('verify-email-url')
+  async verifyEmailUrl(@Body() body: VerifyDto) {
+    try {
+      const { userId, token } = body;
+      const validateTokenResponse = await validateToken(token);
+      if (!validateTokenResponse.valid) {
+        throw new BadRequestException('Token is not valid');
+      }
+      await this.userService.setUesrvalid(userId);
+      return { message: 'User validated', status: 'okay' };
+    } catch (error) {
+      throw new BadRequestException(error?.message || error);
+    }
+  }
+
   @Post('register')
   async register(
     @Body() authBody: CreateUserDto,
@@ -78,12 +97,16 @@ export class AuthenticationController {
       if (existingUser) {
         throw new BadRequestException('User already Exists');
       }
+
       const salt = await bcrypt.genSalt();
       const hash = await bcrypt.hash(authBody?.password, salt);
+
       const user = await this.userService.create({
         ...authBody,
         password: hash,
+        verified: false,
       });
+
       if (!user) {
         throw new BadRequestException();
       }
@@ -92,19 +115,23 @@ export class AuthenticationController {
         firstName: user.firstName || '',
         lastName: user.lastName || '',
         email: user.email,
+        verified: false,
       };
-      const token = jwt.sign(
+
+      const emailToken = jwt.sign(
         {
           ...userData,
         },
         process.env.JWT_SECRET,
-        { expiresIn: '7d' },
+        { expiresIn: '1h' },
       );
+      const url = `${process.env.BASE_URL}verify-email/${user._id}/${emailToken}`;
+      await sendEmail(user.email, 'Verify Email', url);
+
       // res.cookie('token', token, this.cookieConfigs);
       return {
-        message: 'Registration Successful',
-        userData: userData,
-        token,
+        message: 'Please verify your email',
+        // userData: userData,
       };
     } catch (error) {
       throw new BadRequestException(error?.message || error);
