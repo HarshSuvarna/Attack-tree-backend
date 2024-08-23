@@ -119,9 +119,9 @@ export class TreeController {
       const treeData = await this.getTreeDetails(id);
       const { nodes, edges } = treeData;
       const topNodeId = nodes.find(
-        (n) => (n.type = Node_Type_Enum.TOP_GATE),
+        (n) => (n.type == Node_Type_Enum.TOP_GATE),
       )?.id;
-      let calculations: any = {};
+            let calculations: any = {};
       if (param.field === '' && param.isPossible) {
         param.field = 'possible';
       }
