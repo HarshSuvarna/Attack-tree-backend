@@ -24,7 +24,7 @@ import nodemailer from 'nodemailer';
 //   } catch (error) {}
 // };
 
-export const sendEmail = async (email, subject, text) => {
+export const sendEmail = async (email, subject, url) => {
   try {
     const transporter = nodemailer.createTransport({
       host: process.env.HOST,
@@ -41,7 +41,7 @@ export const sendEmail = async (email, subject, text) => {
       from: process.env.USER,
       to: email,
       subject: subject,
-      text: text,
+      text: `Welcome to Cybersafe. Please click on the link to verify your email ID. \n ${url}`,
     });
     console.log('Email sent Successfully');
   } catch (error) {
